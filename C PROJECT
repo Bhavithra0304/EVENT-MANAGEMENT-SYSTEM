@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #define max_info 100 
+#define max_reg 200
 typedef struct{
 	int ID;
 	char Name[50];
@@ -20,7 +21,7 @@ typedef struct{
 	int members;	
 }partaker;
 
-partaker det[max_info]; //PARTICIPANT DETAILS 
+partaker det[max_reg]; //PARTICIPANT DETAILS 
 int ecount=0;           //EVENT COUNT
 void Information()
 {
