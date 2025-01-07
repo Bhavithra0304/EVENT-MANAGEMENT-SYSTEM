@@ -1,0 +1,258 @@
+#include<stdio.h>
+#include<string.h>
+#define max_info 100 
+typedef struct{
+	int ID;
+	char Name[50];
+	char Date[50];
+	char Location[100];
+	float ticket_price;
+	int Total_tickets;
+	int Sold_tickets;
+}event;
+
+event infor[max_info];//EVENT INFORMATION
+
+typedef struct{
+	int id;
+	char name[50];
+	char email[50];
+	int members;	
+}partaker;
+
+partaker det[max_info]; //PARTICIPANT DETAILS 
+int ecount=0;           //EVENT COUNT
+void Information()
+{
+	if(ecount==max_info)
+	{
+		printf("\nEVENT FULL");
+		return;
+	}
+	printf("\nEnter Event ID :");
+	scanf("%d",&infor[ecount].ID);
+	getchar();
+	printf("\nEnter Event Name :");
+	fgets(infor[ecount].Name,sizeof(infor[ecount].Name),stdin);
+	infor[0].Name[strlen(infor[ecount].Name)-1]='\0';
+	printf("\nEnter Event Date :");
+	scanf("%s",infor[ecount].Date);
+	printf("\nEnter Event Location :");
+	scanf("%s",&infor[ecount].Location);
+	printf("\nEnter Ticket Amount :");
+	scanf("%.2f",&infor[ecount].ticket_price);
+	printf("\nEnter Total tickets:");
+	scanf("%d",&infor[ecount].Total_tickets);
+	printf("\nEnter Sold Tickets :");
+	scanf("%d",&infor[ecount].Sold_tickets);
+	ecount++;
+	printf("\nEVENT CREATED SUCCESSFULLY\n");
+}
+
+void Show()
+{
+    if(ecount==0)
+    {
+        printf("\nREGISTRATION INCOMPLETE\n");
+    }
+    printf("Registeration  Details\n\n");
+    printf("==================================================================================================\n\n\n");
+    printf("%-5s %-15s %-10s %-15s %-15s %-15s %-15s\n", "ID", "Name", "Date","Location","Ticket Price","Total Tickets","Sold Tickets");
+    printf("--------------------------------------------------------------------------------------------------\n\n\n");
+    for(int i=0;i<ecount;i++) {
+    printf("%-5d %-15s %-10s %-15s %-15f %-15d %-15d\n", infor[i].ID, infor[i].Name,
+    infor[i].Date, infor[i].Location, infor[i].ticket_price, infor[i].Total_tickets, infor[i].Sold_tickets);
+    printf("==================================================================================================\n\n\n");
+    }
+    printf("\nDIPLAYED SUCCESSFULLY\n");
+}
+
+void modify()
+{
+    int new_id,found=0,i;
+    printf("Enter the new ID\n");
+    scanf("%d",&new_id);
+    for(i=0;i<ecount;i++)
+    {
+        if(new_id==infor[i].ID)
+        {
+            found=1;
+            getchar();
+            printf("\nEnter Event Name : ");
+            fgets(infor[i].Name,sizeof(infor[i].Name),stdin);
+        	infor[i].Name[strlen(infor[i].Name)-1]='\0';
+        	printf("\nEvent Date : ");
+        	scanf("%s",infor[i].Date);
+        	printf("\nEnter Event Location : ");
+	        scanf("%s",&infor[i].Location);
+	        printf("\nEnter Ticket Amount : ");
+	        scanf("%f",&infor[i].ticket_price);
+        	printf("\nEnter Total tickets : ");
+        	scanf("%d",&infor[i].Total_tickets);
+        	printf("\nEnter Sold Tickets : ");
+        	scanf("%d",&infor[i].Sold_tickets);
+        }
+    }
+    if(found==1)
+    {
+        printf("\nEVENT MODIFIED SUCCESSFULLY\n");
+    }
+    else
+    {
+        printf("\nMODIFICATION FAILED\n");
+    }
+}
+
+void cancel()
+{
+    int new_id,found=0,i,j;
+    printf("Enter the ID to Delete :");
+    scanf("%d",&new_id);
+    for(i=0;i<ecount;i++)
+    {
+        if(new_id==infor[i].ID)
+        {
+            found=1;
+            for(j=i;j<ecount;j++)
+            {
+                infor[j]=infor[j+1];
+            }
+        }
+    }
+    ecount--;
+    if(found==1)
+    {
+        printf("\nREGISTERATION CANCELLED SUCCESSFULLY\n");
+    }
+    else
+    {
+        printf("\nNO ID FOUND\n");
+    }
+}
+int pcount;
+void participant()
+{
+    int i,new_id,found=0;
+    printf("Enter Event ID :");
+    scanf("%d",&new_id);
+    for(i=0;i<ecount;i++)
+    {
+        if(new_id==infor[i].ID)
+        {
+            found=1;
+            /*printf("\nEnter Event ID :");
+        	scanf("%d",&det[ecount].id);*/
+        	getchar();
+        	printf("\nEnter Participant Name :");
+        	fgets(det[ecount].name,sizeof(det[ecount].name),stdin);
+        	det[i].name[strlen(det[ecount].name)-1]='\0';
+        	printf("\nEnter Participant E-mail :");
+        	scanf("%s",det[ecount].email);
+        	printf("\nEnter Famil Members :");
+        	scanf("%d",&det[ecount].members);
+        	pcount++;
+        }
+    }
+    if(found==1)
+    {
+        printf("EVENT REGISTERED SUCCESSFULLY");
+    }
+    else
+    {
+        printf("EVENT ID NOT FOUND");
+    }
+}
+void search()
+{
+    int new_id,i,found=0;
+    printf("Enter the searching ID :");
+    scanf("%d",&new_id);
+    for(i=0;i<ecount;i++)
+    {
+        if(new_id==infor[i].ID)
+        {
+            found=1;
+        }
+    }
+    if(found==1){
+        printf("EVENT FOUND\n");
+    }
+    else{
+        printf("EVENT NOT FOUND\n");
+    }
+}
+void amount()
+{
+    int new_id,i,tic=0;
+    printf("Enter Event ID :");
+    scanf("%d",&new_id);
+    for(i=0;i<ecount;i++)
+    {
+        if(new_id==infor[i].ID)
+        {
+          tic=tic+(infor[i].ticket_price*infor[i].Sold_tickets);
+        }
+    }
+    printf("%d",tic);
+}
+void number_of_par()
+{
+     printf("NUMBER OF PARTICIPANTS REGISTERED FOR THE EVENT :");
+     printf("%d",pcount);
+}
+int main()
+{
+	int choice;
+	do{
+		printf("\n------EVENT MANAGEMENT SYSTEM-------\n");
+		printf("\n");
+		printf(" 1. Event Registeration\n");
+		printf(" 2. To Display\n");
+		printf(" 3. To Modify\n");
+		printf(" 4. To Cancel\n");
+		printf(" 5. Register for participant\n");
+		printf(" 6. To Search\n");
+		printf(" 7. To Calculate Ticket Amount\n");
+		printf(" 8. Number Of Participant Registered\n");
+		printf(" 9. Exit\n");
+		printf("\n");
+		printf("------------------------------------------\n");
+		printf("\n");
+		printf("Enter Your Choice\n");
+		scanf("%d",&choice);
+	switch(choice)
+	{
+		case 1:
+		    Information();
+		    break;
+	    case 2:
+	        Show();
+	        break;
+		case 3:
+		    modify();
+		    break;
+		case 4:
+		    cancel();
+		    break;
+		case 5:
+		    participant();
+		    break;
+		case 6:
+		     search();
+		     break;
+		case 7:
+		     amount();
+		     break;
+		case 8:
+		     number_of_par();
+		     break;
+		case 9:
+		     break;
+		default:
+		     printf("Enter Valid Choice");
+	}
+    }
+	while(choice!=0);
+
+	return 0;
+}
